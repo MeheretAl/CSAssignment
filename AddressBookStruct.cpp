@@ -4,7 +4,7 @@ using namespace std;
 
 struct PhoneBook
 {
-    string f;
+    string fN;
     string lN;
     string pN;
 };

@@ -26,7 +26,7 @@ void addContact()
         cout << "Enter the phone num: ";
         cin >> phoneNumber;
         // checks if phoneNumber length is less than 10 and that all digits are integers
-        if (!alldigits(phoneNumber) || phoneNumber.size() >= 10)
+        if (!alldigits(phoneNumber) || phoneNumber.size() > 10)
         {
             cout << "Enter a valid Phone Number!\n";
             addContact();

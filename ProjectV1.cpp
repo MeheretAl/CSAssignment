@@ -1,3 +1,6 @@
+// V1.0.1 invalid input patch jan 18
+// V1.0.2 changes in reading data from file jan 24
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -38,7 +41,7 @@ void addContact(PhoneBook Book)
             cout << "Enter the last name: ";
             cin >> Book.lastName;
 
-            file << Book.phoneNumber << ' ' << Book.firstName << ' ' << Book.lastName << ' ' << endl;
+            file << Book.phoneNumber << ',' << Book.firstName << ',' << Book.lastName << ',' << endl;
         }
     }
     else

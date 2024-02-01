@@ -1,6 +1,15 @@
 // V1.0.1 invalid input patch jan 18
 // V1.0.2 changes in reading data from file jan 24
 
+/*  READ!
+
+only misses formatting and some changes in the update function
+to make it better will add that if i have some time left on my hand
+
+other than that I don't think there are problems with the code
+run it on your local system and see if there are any changes to be done
+*/
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -14,6 +23,7 @@ struct PhoneBook
     string phoneNumber;
     string firstName;
     string lastName;
+    // add other data here
 };
 
 bool alldigits(string phoneNum)
@@ -61,7 +71,11 @@ void displayContact()
 
     if (file.is_open())
     {
+
         string line;
+        /* add a cout here that formattes the data
+        use setw to indent the lines to the left and if possible
+        make a table*/
         while (getline(file, line))
         {
             cout << line << endl;
@@ -90,6 +104,7 @@ void searchContact(const PhoneBook &book)
             auto pos = line.find(contactToBeSearched);
             if (pos != string::npos)
             {
+                /*formatting here too*/
                 cout << "Contact Found\n";
                 cout << line << endl;
                 contactFound = true;
@@ -175,7 +190,7 @@ void updateContact(PhoneBook &book)
         else
         {
             cout << "Contact not found" << endl;
-            remove("temp.txt"); // Delete the temp file
+            remove("temp.txt"); // Deletes the temp file
         }
     }
     else

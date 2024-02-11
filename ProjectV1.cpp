@@ -1,5 +1,6 @@
 // V1.0.1 invalid input patch jan 18
 // V1.0.2 changes in reading data from file jan 24
+// V1.0.3 output formatting feb 11
 
 /*  READ!
 
@@ -10,12 +11,16 @@ other than that I don't think there are problems with the code
 run it on your local system and see if there are any changes to be done
 */
 
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include <string>
+#include <iostream>  // basic output and input header
+#include <cstdlib>   //needed for system("CLS")
+#include <iomanip>   //needed for setw
+#include <sstream>   //needed to split strings at commas
+#include <fstream>   // file manipulation
+#include <string>    //needed for getline function
 #include <limits>    //needed for input validation
 #include <algorithm> //needed for alldigits function
+
+#define CLEAR_SCREEN system("CLS")
 
 using namespace std;
 
@@ -30,6 +35,15 @@ struct PhoneBook
 bool alldigits(string phoneNum)
 {
     return all_of(phoneNum.begin(), phoneNum.end(), ::isdigit);
+}
+
+void formatData(string line, string phoneNumber, string firstName, string lastName)
+{
+    stringstream ss(line);
+    getline(ss, phoneNumber, ',');
+    getline(ss, firstName, ',');
+    getline(ss, lastName, ',');
+    cout << setw(10) << phoneNumber << setw(15) << firstName << setw(15) << lastName << endl;
 }
 
 void addContact(PhoneBook Book)
@@ -63,11 +77,11 @@ void addContact(PhoneBook Book)
     file.close();
 
     cout << "Contact added successfully." << endl;
-    cout << Book.phoneNumber << "," << Book.firstName << "," << Book.lastName << endl;
 }
 
 void displayContact()
 {
+    CLEAR_SCREEN;
     ifstream file("Book.txt");
 
     if (file.is_open())
@@ -79,13 +93,8 @@ void displayContact()
         while (getline(file, line))
         {
             string phoneNumber, firstName, lastName;
-            stringstream ss(line);
-            getline(ss, phoneNumber, ',');
-            getline(ss, firstName, ',');
-            getline(ss, lastName, ',');
-            cout << setw(10) << phoneNumber << setw(15) << firstName << setw(15) << lastName << endl;
+            formatData(line, phoneNumber, firstName, lastName);
         }
-        cout << "--------------------------------------------------\n";
     }
     else
     {
@@ -110,9 +119,10 @@ void searchContact(const PhoneBook &book)
             auto pos = line.find(contactToBeSearched);
             if (pos != string::npos)
             {
-                /*formatting here too*/
-                cout << "Contact Found\n";
-                cout << line << endl;
+                string phoneNumber, firstName, lastName;
+                cout << setw(10) << "Phone Number" << setw(15) << "First Name" << setw(15) << "Last Name" << endl;
+                cout << "--------------------------------------------------\n";
+                formatData(line, phoneNumber, firstName, lastName);
                 contactFound = true;
                 break;
             }

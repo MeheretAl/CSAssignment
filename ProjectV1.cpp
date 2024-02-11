@@ -11,6 +11,7 @@ run it on your local system and see if there are any changes to be done
 */
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <string>
 #include <limits>    //needed for input validation
@@ -62,7 +63,7 @@ void addContact(PhoneBook Book)
     file.close();
 
     cout << "Contact added successfully." << endl;
-    cout << Book.phoneNumber << " " << Book.firstName << " " << Book.lastName << endl;
+    cout << Book.phoneNumber << "," << Book.firstName << "," << Book.lastName << endl;
 }
 
 void displayContact()
@@ -71,19 +72,24 @@ void displayContact()
 
     if (file.is_open())
     {
-
         string line;
-        /* add a cout here that formattes the data
-        use setw to indent the lines to the left and if possible
-        make a table*/
+        cout << "--------------------------------------------------\n";
+        cout << setw(10) << "Phone Number" << setw(15) << "First Name" << setw(15) << "Last Name" << endl;
+        cout << "--------------------------------------------------\n";
         while (getline(file, line))
         {
-            cout << line << endl;
+            string phoneNumber, firstName, lastName;
+            stringstream ss(line);
+            getline(ss, phoneNumber, ',');
+            getline(ss, firstName, ',');
+            getline(ss, lastName, ',');
+            cout << setw(10) << phoneNumber << setw(15) << firstName << setw(15) << lastName << endl;
         }
+        cout << "--------------------------------------------------\n";
     }
     else
     {
-        cerr << "Error occurred";
+        cerr << "Error occurred while opening file." << endl;
     }
 
     file.close();
@@ -165,7 +171,7 @@ void updateContact(PhoneBook &book)
                     cin >> newFirstName;
                     cout << "Enter the second name: ";
                     cin >> newSecondName;
-                    tempFile << newPhoneNum << ' ' << newFirstName << ' ' << newSecondName << endl;
+                    tempFile << newPhoneNum << ',' << newFirstName << ',' << newSecondName << endl;
                 }
                 else
                 {
@@ -197,42 +203,6 @@ void updateContact(PhoneBook &book)
     {
         cerr << "Error Occurred\n";
     }
-}
-
-void searchContact()
-{
-    ifstream inputFile("Book.txt");
-
-    if (inputFile.is_open())
-    {
-        bool found = false;
-        string line;
-        string searchTerm;
-        cout << "Input SearchTerm (Name,PhoneNumber): ";
-        cin >> searchTerm;
-        while (getline(inputFile, line))
-        {
-            auto pos = line.find(searchTerm);
-            if (pos != string::npos)
-            {
-                cout << "Contact Found!\n";
-                cout << line << endl;
-                found = true;
-                break;
-            }
-        }
-
-        if (!found)
-        {
-            cout << "Contact doesn't exist\n";
-        }
-    }
-    else
-    {
-        cerr << "Error Occurred";
-    }
-
-    inputFile.close();
 }
 
 void deleteContact(PhoneBook &book)

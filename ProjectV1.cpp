@@ -2,15 +2,6 @@
 // V1.0.2 changes in reading data from file jan 24
 // V1.0.3 output formatting feb 11
 
-/*  READ!
-
-only misses formatting and some changes in the update function
-to make it better will add that if i have some time left on my hand
-
-other than that I don't think there are problems with the code
-run it on your local system and see if there are any changes to be done
-*/
-
 #include <iostream>  // basic output and input header
 #include <cstdlib>   //needed for system("CLS")
 #include <iomanip>   //needed for setw
